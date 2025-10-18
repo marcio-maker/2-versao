@@ -1,0 +1,1041 @@
+/* styles.css */
+
+/* Variáveis Otimizadas (Novas cores e melhor organização) */
+:root {
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --primary: #4A90E2; /* Azul principal */
+  --secondary: #FF8F00; /* Laranja secundário para destaque */
+  --success: #00C853; /* Verde para sucesso/concluído */
+  --accent: #9b59b6; /* Roxo de destaque */
+  --muted: #7f8c8d; /* Texto secundário */
+  --text: #2c3e50; /* Texto principal */
+  --danger: #FF4081; /* Rosa/Vermelho para erro */
+  --warning: #FFC107; /* Amarelo para atenção */
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.05);
+  
+  /* Dark Mode Variables */
+  --dark-bg: #121212;
+  --dark-card: #1e1e1e;
+  --dark-text: #e0e0e0;
+  --dark-muted: #9e9e9e;
+}
+
+/* Dark Mode */
+.dark-mode {
+  --bg: var(--dark-bg);
+  --card: var(--dark-card);
+  --text: var(--dark-text);
+  --muted: var(--dark-muted);
+  background-color: var(--dark-bg); /* Fundo sólido para melhor leitura */
+  color: var(--text);
+}
+
+/* Base global */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background-color 0.3s; /* Transição suave do Dark Mode */
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* App container (Simulando um celular) */
+.app {
+  width: 100vw;
+  min-height: 100vh; /* Ajuste para min-height para melhor adaptação */
+  overflow-x: hidden; 
+  background: var(--card);
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Header, Content, Footer */
+  max-width: 420px; /* Leve aumento na largura máxima */
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: background 0.3s;
+}
+
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  width: 100%;
+}
+
+
+.brand .logo {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Navigation & Menu */
+.nav-actions {
+  position: relative;
+}
+
+.icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0 8px;
+  transition: color 0.2s;
+}
+
+.icon:active, .icon:hover {
+  color: var(--primary);
+}
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px); /* Posição abaixo do botão com espaço */
+  left: 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  min-width: 200px;
+  z-index: 1001; 
+  padding: 8px 0;
+  transform-origin: top;
+  animation: slideIn 0.3s ease-out;
+}
+
+.menu-dropdown.active {
+  display: block;
+}
+
+.menu-dropdown .tab {
+  padding: 12px 16px; /* Padding aumentado para melhor toque */
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.menu-dropdown .tab:hover {
+  background-color: var(--bg);
+}
+
+/* Keyframes para animação de abertura do menu */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(0) scaleY(0.9); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+/* Screens and Content */
+.screen {
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.main-content {
+  padding-top: 70px; /* altura aproximada do header */
+  padding-bottom: 70px; /* espaço pro footer fixo */
+  overflow-y: auto;
+}
+
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Typography and common elements */
+h1, h2, h3 {
+  color: var(--text);
+  margin-top: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9em;
+}
+
+.badge {
+  background: var(--accent);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+/* Buttons and Forms */
+.btn {
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px; /* Padding melhorado */
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn:hover:not(.btn-disabled) {
+  background-color: #3a7bd5;
+}
+
+.btn.ghost {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--muted);
+}
+
+.btn.ghost:hover:not(.btn-disabled) {
+  background-color: var(--bg);
+}
+
+.btn-disabled,
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--muted) !important;
+  color: white !important;
+  pointer-events: none; /* Garante que não haja interação */
+}
+
+/* Signup Form Improvements */
+.signup-form input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  margin: 8px 0;
+  border: 1px solid var(--bg);
+  border-radius: 6px;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.signup-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.signup-form button.signup-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--muted);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.signup-form button.signup-btn:hover {
+  background-color: var(--bg);
+}
+
+.signup-or {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 0.9em;
+  color: var(--muted);
+  position: relative;
+}
+
+.signup-or::before,
+.signup-or::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: var(--bg);
+}
+
+.signup-or::before {
+  left: 0;
+}
+
+.signup-or::after {
+  right: 0;
+}
+
+.dark-mode .signup-or::before,
+.dark-mode .signup-or::after {
+  background: var(--dark-muted);
+}
+
+
+/* Módulo Cards - Ajuste para melhor clareza */
+.module {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.module:hover:not(.locked) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.module.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Imagens de Módulo */
+.module-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorção */
+}
+
+.module-info {
+  flex-grow: 1;
+}
+
+.module-info h3 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.module-info p {
+  margin: 4px 0 8px;
+  font-size: 0.9em;
+  color: var(--muted);
+}
+
+.module-progress progress {
+  width: 100%;
+  height: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.module-progress progress::-webkit-progress-bar {
+  background-color: var(--bg);
+  border-radius: 5px;
+}
+
+.module-progress progress::-webkit-progress-value {
+  background-color: var(--primary);
+}
+
+.module-progress .progress-text {
+  font-size: 0.8em;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.module-status {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.module.locked .module-status {
+  color: var(--muted);
+}
+
+/* Lesson List (Aulas) - Novo Estilo de Card de Lista com Imagem */
+.aula {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  border-left: 5px solid var(--muted);
+  position: relative; /* Para posicionar o overlay de status */
+}
+
+.aula:hover:not(.locked) {
+  background-color: #e8eaf6; /* Light hover background */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.dark-mode .aula:hover:not(.locked) {
+  background-color: #2a2a2a;
+}
+
+.aula.completed {
+  border-left-color: var(--success);
+}
+
+.aula.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-left-color: var(--muted);
+}
+
+.aula-img-wrap {
+  width: 50px; /* Levemente maior para dar mais destaque */
+  height: 50px;
+  border-radius: 8px; /* Borda mais quadrada para thumbnail */
+  background-color: var(--muted);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Para conter o ícone de overlay */
+}
+
+.aula-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que a thumbnail preencha o espaço */
+}
+
+.aula-icon-overlay {
+    position: absolute;
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 5;
+}
+
+.aula-info {
+  flex-grow: 1;
+}
+
+.aula-info h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+.aula-info p {
+  margin: 2px 0 0;
+  font-size: 0.8em;
+  color: var(--muted);
+}
+
+.aula-status {
+  font-size: 1.2em;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.aula.completed .aula-status {
+  color: var(--success);
+}
+
+.aula.locked .aula-status {
+  color: var(--muted);
+}
+
+/* Lesson Screen - Melhoria no Layout do Vídeo */
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.player-header h2 {
+  margin: 0;
+  font-size: 1.3em;
+}
+
+.lesson-video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  /* Expande para as bordas do card do player (melhor UX visual) */
+  margin: -20px -20px 0px -20px; 
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.lesson-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 0 0 0; /* Padding ajustado no container de botões */
+}
+
+.player-controls .btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.9em;
+}
+
+.quiz-area-card {
+  margin-top: 15px;
+  padding: 20px;
+}
+
+
+/* Quiz Styles */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.options-grid .option {
+  padding: 12px;
+  border: 1px solid var(--bg);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.2s, border-color 0.2s;
+  background-color: var(--bg);
+}
+
+.dark-mode .options-grid .option {
+  border: 1px solid var(--dark-muted);
+  background-color: var(--dark-card);
+}
+
+.options-grid .option:hover {
+  border-color: var(--primary);
+  background-color: var(--bg);
+}
+
+.options-grid .option.correct {
+  background-color: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.options-grid .option.wrong {
+  background-color: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+/* Footer (Nav Bar) */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  padding: 10px 0;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-around;
+  z-index: 1000;
+  border-top: 1px solid var(--bg);
+}
+
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.nav-item.active {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.nav-item .nav-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+/* Toast/Popup Message - Ajustado */
+#toast-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000; /* Mais alto que o menu */
+  padding: 0 20px 30px;
+  pointer-events: none; /* Permite cliques por baixo */
+}
+
+.toast {
+  min-width: 250px;
+  max-width: 350px;
+  background-color: var(--text);
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: all 0.5s ease-out;
+  margin: 0 auto;
+  transform: translateY(100%);
+  pointer-events: auto; /* Reativa o ponteiro no toast */
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.hide {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.toast.success { background-color: var(--success); }
+.toast.error { background-color: var(--danger); }
+.toast.warning { background-color: var(--warning); color: var(--text); }
+.toast.info { background-color: var(--primary); }
+
+/* Profile Screen Styles */
+.profile-stats {
+  border-left: 5px solid var(--primary);
+}
+
+.menu-list {
+  border: 1px solid var(--bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--bg);
+  transition: background-color 0.2s;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:hover {
+  background-color: var(--bg);
+}
+
+.menu-icon {
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.menu-text {
+  flex-grow: 1;
+  font-weight: 500;
+}
+
+.menu-action {
+  color: var(--muted);
+  font-size: 0.9em;
+}
+
+/* Toggle Switch Styles */
+.toggle-group {
+  margin: 0; /* Remove margin-bottom nativo do form-group */
+  padding: 12px 0;
+}
+
+.toggle-group:last-of-type {
+  border-bottom: none;
+}
+
+/* Benefits Screen - Melhoria para Grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: var(--radius);
+  border-left: 5px solid;
+  background-color: var(--bg);
+}
+
+.benefit-card.positive { border-left-color: var(--success); background-color: rgba(0, 200, 83, 0.05); }
+.benefit-card.neutral { border-left-color: var(--muted); background-color: rgba(127, 140, 141, 0.05); }
+.benefit-card.primary { border-left-color: var(--primary); background-color: rgba(74, 144, 226, 0.05); }
+.benefit-card.danger { border-left-color: var(--danger); background-color: rgba(255, 64, 129, 0.05); }
+
+.benefit-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+  padding-top: 0;
+}
+
+.benefit-card-text h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+/* Sentiments Screen - Melhoria para Grid */
+.sentiments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  gap: 10px;
+}
+
+.sentiment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  margin-bottom: 0; /* Removido margin-bottom */
+  border: 1px solid var(--bg); /* Borda sutil */
+  border-radius: 8px;
+  background-color: var(--bg);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.sentiment-card:active {
+  transform: scale(0.98);
+}
+
+.sentiment-card .sentiment-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.sentiment-card .sentiment-text {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 0;
+}
+
+/* Complete Screen */
+.complete-message {
+  padding: 20px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg); /* Fundo claro para o parabéns */
+}
+
+/* Dark Mode Overrides - Simplificados e ajustados */
+
+.dark-mode .app {
+  background-color: var(--dark-bg);
+}
+
+.dark-mode .header {
+  background: var(--dark-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.dark-mode .card,
+.dark-mode .footer {
+  background: var(--dark-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.dark-mode .toggle-group {
+  border-bottom-color: var(--dark-bg);
+}
+
+.dark-mode .toggle-slider:before {
+  background-color: var(--dark-bg);
+}
+
+.dark-mode .signup-form input,
+.dark-mode .form-group input {
+  background: var(--dark-bg) !important;
+  border: 1px solid var(--dark-muted) !important;
+  color: var(--dark-text) !important;
+}
+
+.dark-mode .menu-list {
+  border-color: var(--dark-muted);
+}
+
+.dark-mode .menu-item {
+  border-bottom-color: var(--dark-bg);
+}
+
+.dark-mode .menu-item:hover {
+  background-color: var(--dark-bg);
+}
+
+.dark-mode .module,
+.dark-mode .aula {
+  background: var(--dark-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dark-mode .aula {
+  background-color: var(--dark-bg) !important;
+  border-color: var(--dark-muted);
+}
+
+.dark-mode .module-progress progress::-webkit-progress-bar {
+  background-color: var(--dark-bg);
+}
+
+.dark-mode .options-grid .option {
+  background-color: var(--dark-bg);
+  border-color: var(--dark-muted);
+}
+
+.dark-mode .complete-message {
+  background-color: var(--dark-bg);
+}
+
+/* Dark Mode Sentiment and Benefit Card Overrides */
+.dark-mode .sentiment-card {
+  border: 1px solid var(--dark-muted) !important;
+  background-color: var(--dark-bg) !important;
+}
+
+/* Cores de fundo mais escuras no dark mode para transparências */
+.dark-mode .benefit-card.positive { background-color: rgba(0, 200, 83, 0.15) !important; }
+.dark-mode .benefit-card.neutral { border-left-color: var(--dark-muted); background-color: rgba(127, 140, 141, 0.15) !important; }
+.dark-mode .benefit-card.primary { background-color: rgba(74, 144, 226, 0.15) !important; }
+.dark-mode .benefit-card.danger { background-color: rgba(255, 64, 129, 0.15) !important; }
+
+.dark-mode .sentiment-card.success { border-color: var(--success); background: rgba(0, 200, 83, 0.2) !important; }
+.dark-mode .sentiment-card.danger { border-color: var(--danger); background: rgba(255, 64, 129, 0.2) !important; }
+.dark-mode .sentiment-card.neutral { border-color: var(--muted); background: rgba(127, 140, 141, 0.2) !important; }
+.dark-mode .sentiment-card.warning { border-color: var(--warning); background: rgba(255, 193, 7, 0.2) !important; }
+
+.dark-mode .sentiment-card.success,
+.dark-mode .sentiment-card.danger,
+.dark-mode .sentiment-card.neutral,
+.dark-mode .sentiment-card.warning {
+  border-left-width: 5px; /* Manter a borda de cor */
+  border-color: currentColor;
+}
+/* --- Novo Ajuste para o Quiz Multi-Etapas --- */
+/* --- Novo Ajuste para o Quiz Multi-Etapas e Estilo --- */
+
+/* Estilização para as Opções do Quiz (melhorada) */
+.options-grid {
+    display: grid;
+    /* Ajusta automaticamente o número de colunas, de 2 a 5 */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Força um layout de coluna única para 2 ou 3 opções (melhor UX no celular) */
+.options-grid-small {
+    display: grid;
+    grid-template-columns: 1fr; /* Força 1 coluna */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.options-grid .option {
+    padding: 0; 
+    border: none; 
+    cursor: default;
+}
+
+.option-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    padding: 15px;
+    background: var(--bg);
+    border: 2px solid var(--muted);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    height: 100%;
+    box-sizing: border-box;
+    font-weight: 500;
+}
+
+.option-card:hover:not(.correct):not(.wrong) {
+    border-color: var(--primary);
+    background: rgba(74, 144, 226, 0.05); /* Cor primária sutil */
+}
+
+.option-text {
+    flex-grow: 1; /* Permite que o texto ocupe o espaço */
+    padding-right: 10px;
+}
+
+/* Ícone de status (Onde o X/V vai aparecer) */
+.option-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-left: 10px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-weight: 700;
+    /* Conteúdo inicial vazio, será preenchido por JS */
+}
+
+/* Estado de CORRETO */
+.option-card.correct {
+    border-color: var(--success);
+    background: rgba(0, 200, 83, 0.15);
+}
+.option-card.correct .option-icon {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+}
+
+/* Estado de ERRADO */
+.option-card.wrong {
+    border-color: var(--danger);
+    background: rgba(255, 64, 129, 0.15);
+}
+.option-card.wrong .option-icon {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+}
+/* --- Perfil com Foto e Campos Estilizados --- */
+.profile-photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  border: 3px solid var(--primary);
+  background-color: var(--bg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--muted);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1em;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: #fff;
+}
+
+.form-group input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.dark-mode #profile-photo {
+  border-color: var(--accent);
+  background-color: var(--dark-bg);
+}
+
+.dark-mode .form-group input {
+  background: var(--dark-card);
+  border-color: var(--dark-muted);
+  color: var(--dark-text);
+}
+
+.dark-mode .form-group input::placeholder {
+  color: var(--dark-muted);
+}
