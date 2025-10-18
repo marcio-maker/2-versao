@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#4c8bf5" />
+  <title>Conexão Pais e Filhos — Curso Demo</title>
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app" role="application" aria-label="App Conexão Pais e Filhos">
+
+    <!-- HEADER FIXO -->
+    <header role="banner" aria-label="Cabeçalho do aplicativo">
+      <div class="nav-actions" style="position:relative;">
+        <button class="icon" aria-expanded="false" aria-controls="menu-dropdown" id="menu-button" title="Menu" onclick="toggleMenu()">☰</button>
+        <div class="menu-dropdown" id="menu-dropdown" role="menu" aria-hidden="true">
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('FAQs/Fale Conosco em desenvolvimento')">❓ FAQs/Fale Conosco</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('Dicas Anteriores em desenvolvimento')">💡 Dicas Anteriores</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="nav('benefits')">⭐ Benefícios</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="nav('sentiments')">🧠 Lista de Emoções</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('Anotações em desenvolvimento')">📝 Anotações</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('Favoritos em desenvolvimento')">❤️ Favoritos</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('Compartilhar em desenvolvimento')">🔗 Compartilhar</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="toast('Idioma em desenvolvimento')">🌐 Idioma</div>
+          <div class="tab" role="menuitem" tabindex="0" onclick="nav('profile')">👤 Configurações do Perfil</div>
+        </div>
+      </div>
+
+      <div class="brand" onclick="nav('home')" role="link" aria-label="Ir para Início" style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <div class="logo" aria-hidden="true">CPF</div>
+        <div>
+          <h1 style="font-size:1.1em;margin:0;line-height:1;">Conexão Pais e Filhos</h1>
+          <div class="muted" style="font-size:11px">Curso por Dr. Wimer Bottura Jr.</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content" id="main-content" role="main" tabindex="-1">
+      <!-- SIGNUP -->
+      <section id="screen-signup" class="screen card" style="display:none;text-align:center;" aria-labelledby="signup-title">
+        <h2 id="signup-title" style="margin-top:0">Bem-vindo(a)!</h2>
+        <p class="muted">Crie sua conta para acompanhar seu progresso no curso e acessar todos os recursos.</p>
+        <div class="signup-form" style="margin-top:12px;">
+          <button class="signup-btn" aria-label="Cadastrar com Google"><img src="https://via.placeholder.com/20?text=G" alt="" style="border-radius:50%"> Cadastrar com Google</button>
+          <button class="signup-btn" aria-label="Cadastrar com Facebook"><img src="https://via.placeholder.com/20?text=F" alt="" style="border-radius:50%"> Cadastrar com Facebook</button>
+
+          <div class="signup-or">ou continue com email</div>
+
+          <label class="sr-only" for="signup-name">Nome completo</label>
+          <input type="text" id="signup-name" placeholder="Seu nome completo" autocomplete="name" aria-label="Seu nome completo">
+
+          <label class="sr-only" for="signup-email">Email</label>
+          <input type="email" id="signup-email" placeholder="seu@email.com" autocomplete="email" aria-label="Seu email">
+
+          <button class="btn" onclick="saveInitialAccount()">Começar o Curso</button>
+        </div>
+      </section>
+
+      <!-- HOME -->
+      <section id="screen-home" class="screen card" style="display:none" aria-labelledby="home-title">
+        <div class="course-head" style="margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div class="muted">Módulos</div>
+            <h2 id="home-title" style="margin:4px 0 0">Fortalecendo Laços Familiares</h2>
+          </div>
+          <div class="meta" style="font-size:0.9em;font-weight:600">32 Aulas</div>
+        </div>
+        <p class="muted">Um curso único para fortalecer laços familiares, ministrado pelo Dr. Wimer Bottura Jr.</p>
+        <div class="modules" id="modules" style="margin-top:12px;"></div>
+      </section>
+
+      <!-- AULAS -->
+      <section id="screen-aulas" class="screen card" style="display:none" aria-labelledby="aulas-title">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+          <div>
+            <div class="muted">Módulo Atual</div>
+            <h2 id="module-title" style="margin:6px 0 0">Título do Módulo</h2>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">Progresso</div>
+            <div id="module-progress" style="font-weight:700;color:var(--primary)">0 / 8</div>
+          </div>
+        </div>
+        <div class="aulas" id="aulas-list"></div>
+        <div style="margin-top:20px;text-align:center">
+          <button class="btn ghost" onclick="nav('home')">← Voltar aos Módulos</button>
+        </div>
+      </section>
+
+      <!-- AULA (PLAYER) -->
+      <section id="screen-aula" class="screen" style="display:none" aria-labelledby="aula-title">
+        <div class="player card" style="padding:0;margin:0;">
+          <div class="lesson-video-container" aria-hidden="true">
+            <iframe id="aula-video" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Player de vídeo"></iframe>
+          </div>
+
+          <div style="padding:20px 20px 0 20px;">
+            <div class="player-header">
+              <div>
+                <div class="muted" style="margin-bottom: 4px;">Aula em Foco</div>
+                <h2 id="aula-title">Título da Aula</h2>
+              </div>
+              <div style="text-align:right">
+                <div class="muted">Duração</div>
+                <div style="font-weight:700">Até 8 min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-controls" style="padding: 0 20px 20px 20px; display:flex; justify-content: space-between; gap: 8px;">
+            <button class="btn ghost" onclick="nav('aulas')">Voltar</button>
+            <button class="btn ghost" id="bookmark-btn">🔖 Marcar Aula</button>
+            <button class="btn ghost" onclick="toast('Link da aula copiado!', 'success')">🔗 Compartilhar</button>
+            <button class="btn" id="mark-complete-btn" style="display:none;">Marcar como Concluída</button>
+          </div>
+        </div>
+
+        <div class="aula-content" id="aula-content"></div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section id="screen-complete" class="screen card" style="display:none;text-align:center">
+        <div class="complete-message">
+          <h2 style="margin-top:0">Parabéns — Aula Concluída 🎉</h2>
+          <div id="final-msg" class="muted">Você completou mais uma aula essencial para sua jornada!</div>
+          <div id="progress-wrap" style="margin-top:18px;margin-bottom:12px">
+            <div class="progress-circle" id="progress-circle">
+              <div id="progress-num" style="font-weight:800">0%</div>
+            </div>
+            <div class="muted" style="margin-top:10px" id="progress-sub">Seu progresso total</div>
+          </div>
+          <div style="margin-top:12px">
+            <button class="btn" onclick="nav('aulas')">Voltar às Aulas</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL (Melhorado) -->
+      <section id="screen-profile" class="screen card" style="display:none; text-align:center;" aria-labelledby="profile-title">
+        <h2 id="profile-title" style="margin-top:0">👤 Configurações do Perfil</h2>
+
+        <div class="profile-photo-section" style="margin-top:8px;">
+          <img id="profile-photo" src="https://via.placeholder.com/120?text=Foto" alt="Foto do Perfil" width="120" height="120">
+          <input type="file" id="photo-input" accept="image/*" style="display:none;" aria-label="Escolher foto de perfil" onchange="updateProfilePhoto(event)">
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <button class="btn ghost" onclick="document.getElementById('photo-input').click()">📸 Escolher Foto</button>
+            <button class="btn ghost" onclick="removeProfilePhoto()">🗑️ Remover</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="profile-name">Nome</label>
+          <input type="text" id="profile-name" placeholder="Digite seu nome completo" autocomplete="name" aria-label="Nome completo">
+        </div>
+
+        <div class="form-group">
+          <label for="profile-email">Email</label>
+          <input type="email" id="profile-email" placeholder="Digite seu email de acesso" autocomplete="email" aria-label="Email">
+        </div>
+
+        <h3 style="margin-top:10px;">Preferências</h3>
+
+        <div class="form-group toggle-group" style="display:flex;align-items:center;gap:8px;">
+          <label for="dark-mode-toggle">🌙 Modo Escuro</label>
+          <input type="checkbox" class="toggle-checkbox" id="dark-mode-toggle" onchange="toggleDarkMode(this)" aria-label="Alternar modo escuro">
+        </div>
+
+        <div class="form-group toggle-group" style="display:flex;align-items:center;gap:8px;">
+          <label for="notifications-toggle">🔔 Notificações</label>
+          <input type="checkbox" class="toggle-checkbox" id="notifications-toggle" onchange="handleNotificationToggle(this)" aria-label="Alternar notificações">
+        </div>
+
+        <div class="form-group toggle-group" style="display:flex;align-items:center;gap:8px;">
+          <label for="reminders-toggle">⏰ Lembretes Diários</label>
+          <input type="checkbox" class="toggle-checkbox" id="reminders-toggle" onchange="handleReminderToggle(this)" aria-label="Alternar lembretes">
+        </div>
+
+        <div style="margin-top:20px;">
+          <button class="btn" onclick="saveAccountSettings()">💾 Salvar Configurações</button>
+        </div>
+      </section>
+
+      <!-- BENEFÍCIOS -->
+      <section id="screen-benefits" class="screen card" style="display:none">
+        <h2 style="margin-top:0">⭐ Benefícios do Curso</h2>
+        <p class="muted">Descubra os principais ganhos que você terá ao completar o programa "Conexão Pais e Filhos".</p>
+        <div class="benefit-card">
+          <h3>Comunicação Clara</h3>
+          <p>Aprenda a expressar suas necessidades e a ouvir seus filhos de forma que ambos se sintam compreendidos e respeitados.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Diminuição de Conflitos</h3>
+          <p>Aplique técnicas práticas para reduzir brigas, discussões e atritos diários, transformando o clima do lar.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Fortalecimento de Laços</h3>
+          <p>Construa uma relação de confiança e respeito mútuo, estabelecendo a base para um relacionamento duradouro com seus filhos.</p>
+        </div>
+      </section>
+
+      <!-- SENTIMENTOS -->
+      <section id="screen-sentiments" class="screen card" style="display:none">
+        <h2 style="margin-top:0">🧠 Lista de Emoções</h2>
+        <p class="muted">Ferramenta essencial para ajudar você e seu filho a nomear e validar o que estão sentindo.</p>
+        <div class="sentiments-grid">
+          <div class="sentiment-card success">Alegria</div>
+          <div class="sentiment-card success">Paz</div>
+          <div class="sentiment-card success">Otimismo</div>
+          <div class="sentiment-card warning">Ansiedade</div>
+          <div class="sentiment-card warning">Confusão</div>
+          <div class="sentiment-card warning">Frustração</div>
+          <div class="sentiment-card danger">Raiva</div>
+          <div class="sentiment-card danger">Tristeza</div>
+          <div class="sentiment-card danger">Medo</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- TOAST -->
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- FOOTER FIXO -->
+    <footer role="navigation" aria-label="Menu inferior">
+      <div class="nav-item active" id="nav-home" onclick="nav('home')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true">🏠</div><span>Início</span>
+      </div>
+      <div class="nav-item" id="nav-benefits" onclick="nav('benefits')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true">⭐</div><span>Benefícios</span>
+      </div>
+      <div class="nav-item" id="nav-sentiments" onclick="nav('sentiments')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true">🧠</div><span>Emoções</span>
+      </div>
+      <div class="nav-item" id="nav-profile" onclick="nav('profile')" role="button" tabindex="0">
+        <div class="nav-icon" aria-hidden="true">👤</div><span>Perfil</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
