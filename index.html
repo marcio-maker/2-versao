@@ -87,6 +87,13 @@
         aria-labelledby="signup-title">
         <h2 id="signup-title" style="margin-top:0">Bem-vindo(a)!</h2>
         <p class="muted">Crie sua conta para acompanhar seu progresso no curso e acessar todos os recursos.</p>
+        
+        <div style="margin-bottom: 15px;">
+          <button class="btn ghost" onclick="handleExistingUser()" style="margin-bottom: 10px;">
+            <i class="fas fa-user-check"></i> Já tenho conta
+          </button>
+        </div>
+        
         <div class="signup-form" style="margin-top:12px;">
           <button class="signup-btn" aria-label="Cadastrar com Google">
             <i class="fab fa-google"></i> Cadastrar com Google
@@ -978,8 +985,6 @@
 
         <!-- Lista de Anotações -->
         <div class="notes-list" id="notes-list"></div>
-
-        <!-- Anotações Rápidas -->
         
         <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
           <button class="btn ghost" onclick="clearNotes()">
