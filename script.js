@@ -690,51 +690,59 @@ class UniversidadePaisApp {
     }
 
     renderModules() {
-        const modulesContainer = document.getElementById('modules');
-        if (!modulesContainer) return;
+    const modulesContainer = document.getElementById('modules');
+    if (!modulesContainer) return;
 
-        const totalProgress = this.stateManager.getProgress();
-        const searchTerm = this.currentSearchTerm;
+    const totalProgress = this.stateManager.getProgress();
+    const searchTerm = this.currentSearchTerm;
 
-        modulesContainer.innerHTML = '';
+    // === ADICIONE ESTAS LINHAS AQUI ===
+    const moduleImages = [
+        "https://i.pinimg.com/736x/0b/57/da/0b57dab511ce87d28abac1d7924e866d.jpg", // Módulo 1
+        "https://i.pinimg.com/736x/da/0c/83/da0c83747f596db117ee11efebaf20c6.jpg", // Módulo 2
+        "https://i.pinimg.com/736x/24/03/40/2403407a1d51c3524ea8e67c26ebac91.jpg", // Módulo 3  
+        "https://i.pinimg.com/736x/54/2e/97/542e97ebc7efbe4718c41dea9d3c415a.jpg"  // Módulo 4
+    ];
+    // === FIM DA ADIÇÃO ===
 
-        COURSE.modules.forEach(mod => {
-            const progress = this.stateManager.getModuleProgress(mod.id);
-            const progressPercent = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
-            const isLocked = mod.id > 0 && this.stateManager.getModuleProgress(mod.id - 1).completed < this.stateManager.getModuleProgress(mod.id - 1).total;
+    modulesContainer.innerHTML = '';
 
-            // Filter by search
-            const moduleText = `${mod.title} ${mod.description}`.toLowerCase();
-            if (searchTerm && !moduleText.includes(searchTerm)) {
-                return;
-            }
+    COURSE.modules.forEach(mod => {
+        const progress = this.stateManager.getModuleProgress(mod.id);
+        const progressPercent = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
+        const isLocked = mod.id > 0 && this.stateManager.getModuleProgress(mod.id - 1).completed < this.stateManager.getModuleProgress(mod.id - 1).total;
 
-            const navFunc = isLocked ? 
-                `app.toast('Conclua o módulo anterior para desbloquear.', 'warning')` : 
-                `app.navWithHistory('aulas', ${mod.id})`;
+        // Filter by search
+        const moduleText = `${mod.title} ${mod.description}`.toLowerCase();
+        if (searchTerm && !moduleText.includes(searchTerm)) {
+            return;
+        }
 
-            const statusIcon = isLocked ? '🔒' : (progressPercent === 100 ? '✅' : '▶️');
-            const statusText = isLocked ? 'Bloqueado' : (progressPercent === 100 ? 'Concluído' : 'Continuar');
+        const navFunc = isLocked ? 
+            `app.toast('Conclua o módulo anterior para desbloquear.', 'warning')` : 
+            `app.navWithHistory('aulas', ${mod.id})`;
 
-            modulesContainer.innerHTML += `
-                <div class="module ${isLocked ? 'locked' : ''}" onclick="${navFunc}">
-                    <img class="module-img" src="https://picsum.photos/seed/familia_m${mod.id}/60/60" 
-                         alt="${mod.title}" loading="lazy">
-                    <div class="module-info">
-                        <h3>${mod.title}</h3>
-                        <p>${mod.description}</p>
-                        <div class="module-progress">
-                            <progress value="${progress.completed}" max="${progress.total}"></progress>
-                            <span class="progress-text">${progress.completed}/${progress.total} aulas</span>
-                        </div>
-                    </div>
-                    <div class="module-status" title="${statusText}">
-                        ${statusIcon}
+        const statusIcon = isLocked ? '🔒' : (progressPercent === 100 ? '✅' : '▶️');
+        const statusText = isLocked ? 'Bloqueado' : (progressPercent === 100 ? 'Concluído' : 'Continuar');
+
+        modulesContainer.innerHTML += `
+            <div class="module ${isLocked ? 'locked' : ''}" onclick="${navFunc}">
+                <img class="module-img" src="${moduleImages[mod.id]}" 
+                     alt="${mod.title}" loading="lazy">
+                <div class="module-info">
+                    <h3>${mod.title}</h3>
+                    <p>${mod.description}</p>
+                    <div class="module-progress">
+                        <progress value="${progress.completed}" max="${progress.total}"></progress>
+                        <span class="progress-text">${progress.completed}/${progress.total} aulas</span>
                     </div>
                 </div>
-            `;
-        });
-
+                <div class="module-status" title="${statusText}">
+                    ${statusIcon}
+                </div>
+            </div>
+        `;
+    });
         // Update total progress
         const totalProgressElement = document.getElementById('total-progress');
         if (totalProgressElement) {
@@ -763,49 +771,65 @@ class UniversidadePaisApp {
     }
 
     renderAulas(moduleId) {
-        const moduleData = COURSE.modules[moduleId];
-        const aulasList = document.getElementById('aulas-list');
-        const progress = this.stateManager.getModuleProgress(moduleId);
+    const moduleData = COURSE.modules[moduleId];
+    const aulasList = document.getElementById('aulas-list');
+    const progress = this.stateManager.getModuleProgress(moduleId);
 
-        if (!aulasList) return;
+    if (!aulasList) return;
 
-        document.getElementById('module-title').textContent = moduleData.title;
-        document.getElementById('module-progress').textContent = `${progress.completed} / ${progress.total}`;
+    document.getElementById('module-title').textContent = moduleData.title;
+    document.getElementById('module-progress').textContent = `${progress.completed} / ${progress.total}`;
 
-        aulasList.innerHTML = '';
+    // === ADICIONE ESTAS LINHAS AQUI ===
+    const aulaImages = [
+        "https://i.pinimg.com/736x/72/86/df/7286df5af5ebda64cbd9afe936045677.jpg", // Aula 1
+        "https://i.pinimg.com/736x/0d/c1/2f/0dc12f5149f1f8bd208944feb34ab7a5.jpg", // Aula 2
+        "https://i.pinimg.com/736x/77/ad/67/77ad671cbac79da1628866bd8f476930.jpg", // Aula 3
+        "https://i.pinimg.com/736x/d2/ad/09/d2ad09ca6003a95d730a32dbab99626f.jpg", // Aula 4
+        "https://i.pinimg.com/736x/04/70/fd/0470fd380119a1f95673785e3572042f.jpg", // Aula 5
+        "https://i.pinimg.com/736x/a9/8e/8f/a98e8f107b99119349ff0789fbd49b74.jpg", // Aula 6
+        "https://i.pinimg.com/736x/5d/4f/5c/5d4f5c7ac599c442cd8f350a6e802f8b.jpg", // Aula 7
+        "https://i.pinimg.com/736x/89/9c/e5/899ce5c5671ca9eaeaab5b825ddc6287.jpg"  // Aula 8
+    ];
+    // === FIM DA ADIÇÃO ===
 
-        moduleData.aulas.forEach(aula => {
-            const aulaKey = `M${moduleId}-A${aula.id}`;
-            const isCompleted = this.stateManager.state.completedAulas[aulaKey] === true;
-            const isUnlocked = this.stateManager.isAulaUnlocked(moduleId, aula.id);
-            const isBookmarked = this.stateManager.state.bookmarkedAulas.includes(aulaKey);
+    aulasList.innerHTML = '';
 
-            const aulaClass = isCompleted ? 'completed' : (isUnlocked ? '' : 'locked');
-            let iconOverlay = isCompleted ? '✅' : (isUnlocked ? '▶️' : '🔒');
-            if (isBookmarked) iconOverlay = '❤️';
+    moduleData.aulas.forEach(aula => {
+        const aulaKey = `M${moduleId}-A${aula.id}`;
+        const isCompleted = this.stateManager.state.completedAulas[aulaKey] === true;
+        const isUnlocked = this.stateManager.isAulaUnlocked(moduleId, aula.id);
+        const isBookmarked = this.stateManager.state.bookmarkedAulas.includes(aulaKey);
 
-            const navFunc = isUnlocked ? 
-                `app.navWithHistory('aula', ${moduleId}, ${aula.id})` : 
-                `app.toast('Conclua a aula anterior para desbloquear.', 'warning')`;
+        const aulaClass = isCompleted ? 'completed' : (isUnlocked ? '' : 'locked');
+        let iconOverlay = isCompleted ? '✅' : (isUnlocked ? '▶️' : '🔒');
+        if (isBookmarked) iconOverlay = '❤️';
 
-            aulasList.innerHTML += `
-                <div class="aula ${aulaClass}" onclick="${navFunc}">
-                    <div class="aula-img-wrap">
-                        <img class="aula-img" src="https://picsum.photos/seed/aula${moduleId}-${aula.id}/50/50" 
-                             alt="${aula.title}" loading="lazy">
-                        <div class="aula-icon-overlay">${iconOverlay}</div>
-                    </div>
-                    <div class="aula-info">
-                        <h3>${aula.title}</h3>
-                        <p>${aula.duration} • ${aula.description}</p>
-                    </div>
-                    <div class="aula-status">
-                        ${isCompleted ? 'Concluída' : ''}
-                    </div>
+        const navFunc = isUnlocked ? 
+            `app.navWithHistory('aula', ${moduleId}, ${aula.id})` : 
+            `app.toast('Conclua a aula anterior para desbloquear.', 'warning')`;
+
+        aulasList.innerHTML += `
+            <div class="aula ${aulaClass}" onclick="${navFunc}">
+                <div class="aula-img-wrap">
+                    <img class="aula-img" 
+                         src="${aulaImages[aula.id]}" 
+                         alt="${aula.title}" 
+                         loading="lazy"
+                         onerror="this.src='https://via.placeholder.com/50/4A90E2/FFFFFF?text=A${aula.id+1}'">
+                    <div class="aula-icon-overlay">${iconOverlay}</div>
                 </div>
-            `;
-        });
-    }
+                <div class="aula-info">
+                    <h3>${aula.title}</h3>
+                    <p>${aula.duration} • ${aula.description}</p>
+                </div>
+                <div class="aula-status">
+                    ${isCompleted ? 'Concluída' : ''}
+                </div>
+            </div>
+        `;
+    });
+}
 
     renderAula(moduleId, aulaId) {
         const moduleData = COURSE.modules[moduleId];
